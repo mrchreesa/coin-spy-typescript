@@ -5,11 +5,12 @@ import Carousel from "./Carousel";
 const useStyles = makeStyles(() => ({
   banner: {
     backgroundImage: "url(./banner2.jpeg)",
+    opacity: 1,
   },
   bannerContent: {
-    height: "350px",
+    height: "360px",
     display: "flex",
-    paddingTop: 25,
+
     flexDirection: "column",
     justifyContent: "space-around",
     backgroundRepeat: "no-repeat",

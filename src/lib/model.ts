@@ -27,3 +27,12 @@ export interface Trending {
   total_supply: number;
   total_volume: number;
 }
+
+export interface Responsive1 {
+  0: {
+    items: number;
+  };
+  512: {
+    items: number;
+  };
+}
