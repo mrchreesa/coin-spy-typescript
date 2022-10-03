@@ -18,3 +18,11 @@ a {
   min-height: 100vh !important;
   color: white !important;
 }
+.row {
+  background-color: #16171a;
+  cursor: pointer !important;
+  font-family: "Montserrat";
+}
+.row:hover {
+  background-color: #131111;
+}

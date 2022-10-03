@@ -35,7 +35,8 @@ const Carousel: React.FC = () => {
     fetchTrendingCoins();
   }, []);
   const items = trendingCoins.map((coin) => {
-    let profit = coin.price_change_percentage_24h >= 0;
+    let profit: boolean = coin.price_change_percentage_24h >= 0;
+
     return (
       <Link className={classes.carouselItem} to={`/coins/${coin.id}`}>
         <img
@@ -46,7 +47,12 @@ const Carousel: React.FC = () => {
         />
         <span>{coin?.symbol}</span>
         &nbsp;
-        <span>
+        <span
+          style={{
+            color: profit ? "rgb(14,203,129)" : "red",
+            fontWeight: 500,
+          }}
+        >
           {profit && "+"}
           {coin?.price_change_percentage_24h?.toFixed(0)}%
         </span>
