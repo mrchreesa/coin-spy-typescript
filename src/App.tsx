@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Homepage from "./Pages/Homepage";
 import CoinPage from "./Pages/CoinPage";
-import { makeStyles } from "@material-ui/core/styles";
 
 const App: React.FC = () => {
   // const classes = useStyles();

@@ -36,3 +36,39 @@ export interface Responsive1 {
     items: number;
   };
 }
+
+export interface Coin {
+  additional_notices: [];
+  asset_platform_id: boolean;
+  block_time_in_minutes: number;
+  categories: [];
+  coingecko_rank: number;
+  coingecko_score: number;
+  community_data: {};
+  community_score: number;
+  country_origin: string;
+  description: { en: any };
+  detail_platforms: {};
+  developer_data: {};
+  developer_score: number;
+  genesis_date: string;
+  hashing_algorithm: string;
+  id: string;
+  image: { large: string; small: string; thumb: string };
+  last_updated: string;
+  links: {};
+  liquidity_score: number;
+  localization: {};
+  market_cap_rank: number;
+  market_data: any;
+  name: string;
+  platforms: {};
+  public_interest_score: number;
+  public_interest_stats: { alexa_rank: number; bing_matches: boolean };
+  public_notice: boolean;
+  sentiment_votes_down_percentage: number;
+  sentiment_votes_up_percentage: number;
+  status_updates: [];
+  symbol: string;
+  tickers: [];
+}
