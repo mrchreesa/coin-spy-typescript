@@ -11,7 +11,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale } from "chart.js";
 import Chart from "react-apexcharts";
-
+import moment from "moment";
 import SelectButton from "./SelectButton";
 import { chartDays } from "../lib/data";
 // import { Chart, registerables } from "chart.js";
@@ -41,32 +41,53 @@ interface Props {
 }
 
 const CoinInfo: React.FC<Props> = ({ coin }) => {
-  const [historicData, setHistoricData] = useState([]);
-  const [coinOHLC, setCoinOHLC] = useState([]);
+  // const [historicData, setHistoricData] = useState([]);
+  const [coinOHLC, setCoinOHLC] = useState<any[]>([]);
   const [days, setDays] = useState<number>(1);
+  const [newData, setNewData] = useState<any[]>([]);
   const [flag, setflag] = useState(false);
 
-  const fetchHistoricData = () => {
-    axios.get(HistoricalChart(coin.id, days, "usd")).then((res) => {
-      setflag(true);
-      setHistoricData(res.data.prices);
-    });
-  };
-
-  const fetchCoinOHLC = () => {
-    axios.get(CoinOHLC(coin.id, days)).then((res) => setCoinOHLC(res.data));
-  };
+  // const fetchHistoricData = () => {
+  //   axios.get(HistoricalChart(coin.id, days, "usd")).then((res) => {
+  //     setflag(true);
+  //     setHistoricData(res.data.prices);
+  //   });
+  // };
   useEffect(() => {
-    fetchHistoricData();
-    fetchCoinOHLC();
+    // fetchHistoricData();
+    const fetchOHLC = () => {
+      axios.get(CoinOHLC(coin.id, days)).then((res) => {
+        setflag(true);
+
+        setCoinOHLC(res.data);
+      });
+    };
+    fetchOHLC();
+    let newArray: any[] = [];
+
+    coinOHLC?.map((item, index) => {
+      newArray.push({
+        x: time[index],
+        y: coinOHLC[index].slice(1, 5),
+      });
+    });
+    setNewData(newArray);
   }, [days]);
-  console.log(coinOHLC);
+
+  const time = coinOHLC.map((coin) => {
+    let date = new Date(coin[0]);
+    let time =
+      date.getHours() > 12
+        ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+        : `${date.getHours()}:${date.getMinutes()} AM`;
+    return days === 1 ? time : date.toLocaleDateString();
+  });
 
   const classes = useStyles();
   const options = {
     series: [
       {
-        data: coinOHLC,
+        data: newData,
       },
     ],
     options: {
@@ -81,6 +102,18 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
       xaxis: {
         type: "datetime",
       },
+      fill: {
+        colors: ["#F44336", "#E91E63", "#9C27B0"],
+      },
+      plotOptions: {
+        candlestick: {
+          colors: {
+            upward: "#3C90EB",
+            downward: "#DF7D46",
+          },
+        },
+      },
+
       yaxis: {
         tooltip: {
           enabled: true,
@@ -88,85 +121,97 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
       },
     },
   };
-  const darkTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#fff",
-      },
-      type: "dark",
-    },
-  });
+  // const darkTheme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       main: "#fff",
+  //     },
+  //     type: "dark",
+  //   },
+  // });
+  console.log(newData);
+  console.log(days);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div className={classes.container}>
-        {!historicData ? (
-          <CircularProgress
-            style={{ color: "gold" }}
-            size={250}
-            thickness={1}
-          />
-        ) : (
+    // <ThemeProvider theme={darkTheme}>
+    <div className={classes.container}>
+      {coinOHLC.length === 0 || !coinOHLC ? (
+        <CircularProgress style={{ color: "gold" }} size={250} thickness={1} />
+      ) : (
+        <>
           <Chart
             options={options}
-            series={options.series}
+            series={options?.series}
             type="candlestick"
             width="100%"
             height="700px"
           />
-          // <>
-          //   <Line
-          //     data={{
-          //       labels: historicData.map((coin) => {
-          //         let date = new Date(coin[0]);
-          //         let time =
-          //           date.getHours() > 12
-          //             ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-          //             : `${date.getHours()}:${date.getMinutes()} AM`;
-          //         return days === 1 ? time : date.toLocaleDateString();
-          //       }),
+          {chartDays.map((day: any) => (
+            <SelectButton
+              key={day.value}
+              onClick={() => {
+                setDays(day.value);
+                setflag(false);
+              }}
+              selected={day.value === days}
+            >
+              {day.label}
+            </SelectButton>
+          ))}
+        </>
+        // <>
+        //   <Line
+        //     data={{
+        //       labels: historicData.map((coin) => {
+        //         let date = new Date(coin[0]);
+        //         let time =
+        //           date.getHours() > 12
+        //             ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+        //             : `${date.getHours()}:${date.getMinutes()} AM`;
+        //         return days === 1 ? time : date.toLocaleDateString();
+        //       }),
 
-          //       datasets: [
-          //         {
-          //           data: historicData.map((coin) => coin[1]),
-          //           label: `Price ( Past ${days} Days ) in $`,
-          //           borderColor: "#EEBC1D",
-          //         },
-          //       ],
-          //     }}
-          //     options={{
-          //       elements: {
-          //         point: {
-          //           radius: 1,
-          //         },
-          //       },
-          //     }}
-          //   />
-          //   <div
-          //     style={{
-          //       display: "flex",
-          //       marginTop: 20,
-          //       justifyContent: "space-around",
-          //       width: "100%",
-          //     }}
-          //   >
-          //     {chartDays.map((day: any) => (
-          //       <SelectButton
-          //         key={day.value}
-          //         onClick={() => {
-          //           setDays(day.value);
-          //           setflag(false);
-          //         }}
-          //         selected={day.value === days}
-          //       >
-          //         {day.label}
-          //       </SelectButton>
-          //     ))}
-          //   </div>
-          // </>
-        )}
-      </div>
-    </ThemeProvider>
+        //       datasets: [
+        //         {
+        //           data: historicData.map((coin) => coin[1]),
+        //           label: `Price ( Past ${days} Days ) in $`,
+        //           borderColor: "#EEBC1D",
+        //         },
+        //       ],
+        //     }}
+        //     options={{
+        //       elements: {
+        //         point: {
+        //           radius: 1,
+        //         },
+        //       },
+        //     }}
+        //   />
+        //   <div
+        //     style={{
+        //       display: "flex",
+        //       marginTop: 20,
+        //       justifyContent: "space-around",
+        //       width: "100%",
+        //     }}
+        //   >
+        // {chartDays.map((day: any) => (
+        //   <SelectButton
+        //     key={day.value}
+        //     onClick={() => {
+        //       setDays(day.value);
+        //       setflag(false);
+        //     }}
+        //     selected={day.value === days}
+        //   >
+        //     {day.label}
+        //   </SelectButton>
+        // ))}
+        //   </div>
+        // </>
+      )}
+    </div>
+    // </ThemeProvider>
   );
 };
 
