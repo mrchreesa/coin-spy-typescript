@@ -5,6 +5,7 @@ interface Props {
   children: any;
   selected: boolean;
   onClick: any;
+  style: {};
 }
 const useStyles = makeStyles({
   selectbutton: {
@@ -25,12 +26,17 @@ const useStyles = makeStyles({
       backgroundColor: "gold",
       color: "black",
     },
-    width: "22%",
+    // width: "100%",
     //   margin: 5,
   },
 });
 
-const SelectButton: React.FC<Props> = ({ children, selected, onClick }) => {
+const SelectButton: React.FC<Props> = ({
+  children,
+  selected,
+  onClick,
+  style,
+}) => {
   const classes = useStyles();
 
   return (

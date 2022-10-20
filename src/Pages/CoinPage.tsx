@@ -12,6 +12,11 @@ import CoinInfo from "../components/CoinInfo";
 import { Coin } from "../lib/model";
 import parse from "html-react-parser";
 import { numberWithCommas } from "../lib/functions";
+import SelectButton from "../components/SelectButton";
+import { collection, addDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { firebaseConfig } from "../lib/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -65,6 +70,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const CoinPage: React.FC = () => {
   const { id } = useParams();
@@ -83,7 +90,22 @@ const CoinPage: React.FC = () => {
   useEffect(() => {
     fetchCoin();
   }, []);
-  console.log(typeof coin);
+  // console.log(coin);
+
+  const addCoinToProfile = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        image: coin?.image.thumb,
+        symbol: coin?.symbol,
+        price: coin?.market_data.current_price.usd,
+      });
+      console.log(docRef);
+
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   const classes = useStyles();
 
@@ -142,6 +164,24 @@ const CoinPage: React.FC = () => {
               M
             </Typography>
           </span>
+        </div>{" "}
+        <div
+          style={{
+            marginTop: 20,
+            justifyContent: "center",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <SelectButton
+            style={{}}
+            selected={false}
+            onClick={() => {
+              addCoinToProfile();
+            }}
+          >
+            Add to Profile
+          </SelectButton>
         </div>
       </div>
       <div>

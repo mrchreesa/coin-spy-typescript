@@ -8,15 +8,10 @@ import {
   ThemeProvider,
   CircularProgress,
 } from "@material-ui/core";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale } from "chart.js";
+
 import Chart from "react-apexcharts";
-import moment from "moment";
 import SelectButton from "./SelectButton";
 import { chartDays } from "../lib/data";
-// import { Chart, registerables } from "chart.js";
-// import ChartCandleStick from "./ChartCandleStick";
-// Chart.register(...registerables);
 
 const useStyles = makeStyles((theme?: any) => ({
   container: {
@@ -53,25 +48,25 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
   //     setHistoricData(res.data.prices);
   //   });
   // };
+  const fetchOHLC = () => {
+    axios.get(CoinOHLC(coin.id, days)).then((res) => {
+      setflag(true);
+      let newArray: any[] = [];
+      setCoinOHLC(res.data);
+      coinOHLC?.map((item, index) => {
+        newArray.push({
+          x: time[index],
+          y: coinOHLC[index].slice(1, 5),
+        });
+      });
+      setNewData(newArray);
+    });
+  };
+
   useEffect(() => {
     // fetchHistoricData();
-    const fetchOHLC = () => {
-      axios.get(CoinOHLC(coin.id, days)).then((res) => {
-        setflag(true);
 
-        setCoinOHLC(res.data);
-      });
-    };
     fetchOHLC();
-    let newArray: any[] = [];
-
-    coinOHLC?.map((item, index) => {
-      newArray.push({
-        x: time[index],
-        y: coinOHLC[index].slice(1, 5),
-      });
-    });
-    setNewData(newArray);
   }, [days]);
 
   const time = coinOHLC.map((coin) => {
@@ -102,14 +97,11 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
       xaxis: {
         type: "datetime",
       },
-      fill: {
-        colors: ["#F44336", "#E91E63", "#9C27B0"],
-      },
+
       plotOptions: {
         candlestick: {
-          colors: {
-            upward: "#3C90EB",
-            downward: "#DF7D46",
+          wick: {
+            useFillColor: true,
           },
         },
       },
@@ -129,8 +121,8 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
   //     type: "dark",
   //   },
   // });
-  console.log(newData);
-  console.log(days);
+  // console.log(newData);
+  // console.log(coinOHLC);
 
   return (
     // <ThemeProvider theme={darkTheme}>
@@ -146,18 +138,28 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
             width="100%"
             height="700px"
           />
-          {chartDays.map((day: any) => (
-            <SelectButton
-              key={day.value}
-              onClick={() => {
-                setDays(day.value);
-                setflag(false);
-              }}
-              selected={day.value === days}
-            >
-              {day.label}
-            </SelectButton>
-          ))}
+          <div
+            style={{
+              display: "flex",
+              marginTop: 20,
+              justifyContent: "space-around",
+              width: "100%",
+            }}
+          >
+            {chartDays.map((day: any) => (
+              <SelectButton
+                style={{}}
+                key={day.value}
+                onClick={() => {
+                  setDays(day.value);
+                  setflag(false);
+                }}
+                selected={day.value === days}
+              >
+                {day.label}
+              </SelectButton>
+            ))}
+          </div>
         </>
         // <>
         //   <Line

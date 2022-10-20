@@ -72,3 +72,5 @@ export interface Coin {
   symbol: string;
   tickers: [];
 }
+
+export interface User {}
