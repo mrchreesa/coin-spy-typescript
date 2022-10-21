@@ -9,9 +9,10 @@ import {
   ThemeProvider,
   Button,
 } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { GiSpy } from "react-icons/gi";
+import { CgProfile } from "react-icons/cg";
 import { User } from "../lib/model";
 import CollapseProfile from "./CollapseProfile";
 
@@ -38,6 +39,7 @@ const Header: React.FC<User> = () => {
   };
   const auth: any = getAuth();
   const currentUser: any = auth.currentUser;
+  let location = useLocation();
 
   useEffect(() => {
     setLoading(true);
@@ -79,15 +81,19 @@ const Header: React.FC<User> = () => {
             >
               Coin Spy &nbsp; <GiSpy />
             </Typography>
-            {user === null ? (
+            {location.pathname === "/login" ? (
               ""
             ) : (
               <Button onClick={() => handleChange()}>
-                <img
-                  style={{ width: "60%" }}
-                  src={user.photoURL}
-                  alt="avatar"
-                />
+                {user?.photoURL !== null ? (
+                  <img
+                    style={{ width: "50%" }}
+                    src={user?.photoURL}
+                    alt="avatar"
+                  />
+                ) : (
+                  <CgProfile size="2.4em" color="gold" />
+                )}
                 <CollapseProfile checked={checked} setChecked={setChecked} />
               </Button>
             )}

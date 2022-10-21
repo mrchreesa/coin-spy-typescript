@@ -17,6 +17,8 @@ import {
 } from "firebase/firestore";
 import { Typography, Button } from "@material-ui/core";
 import SelectButton from "./SelectButton";
+import { useNavigate } from "react-router-dom";
+
 import { firebaseConfig } from "../lib/firebaseConfig";
 import { initializeApp } from "firebase/app";
 
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       "&:hover": {
-        backgroundColor: "#35363a",
+        color: "red",
         opacity: "0.7",
       },
     },
@@ -63,6 +65,7 @@ const CollapseProfile: React.FC<Props> = ({ checked, setChecked }) => {
   const [savedCoins, setSavedCoins] = useState<any>(null);
 
   const classes = useStyles();
+  const navigate = useNavigate();
   const auth: any = getAuth();
   const { currentUser } = auth;
 
@@ -87,6 +90,11 @@ const CollapseProfile: React.FC<Props> = ({ checked, setChecked }) => {
     setChecked(true);
   };
 
+  const handleNavigate = (c: any) => {
+    navigate(`/coins/${c.name.toLowerCase()}`);
+    navigate(0);
+  };
+
   useEffect(() => {
     getSavedCoins();
   }, []);
@@ -99,7 +107,7 @@ const CollapseProfile: React.FC<Props> = ({ checked, setChecked }) => {
         <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
             <Typography className={classes.name}>
-              {currentUser.displayName}
+              {currentUser?.displayName}
             </Typography>
             <div
               style={{
@@ -119,6 +127,7 @@ const CollapseProfile: React.FC<Props> = ({ checked, setChecked }) => {
                     }}
                   >
                     <ListItem
+                      onClick={() => handleNavigate(c)}
                       style={{
                         paddingTop: 15,
                         paddingBottom: 15,

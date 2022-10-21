@@ -98,6 +98,7 @@ const CoinPage: React.FC = () => {
         image: coin?.image.thumb,
         symbol: coin?.symbol,
         price: coin?.market_data.current_price.usd,
+        name: coin?.name,
       });
       console.log(docRef);
 

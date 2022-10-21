@@ -118,8 +118,11 @@ const CoinsTable: React.FC = () => {
               </TableHead>
               <TableBody>
                 {handleSearch()
-                  .slice((page - 1) * 10, (page - 1) * 10 + 10)
-                  .map((row) => {
+                  .slice(
+                    page === 1 ? (page - 1) * 10 : page * 20,
+                    page === 1 ? (page - 1) * 10 + 20 : page * 20 + 20
+                  )
+                  .map((row, index) => {
                     const profit = row.price_change_percentage_24h > 0;
                     return (
                       <TableRow
@@ -130,8 +133,17 @@ const CoinsTable: React.FC = () => {
                         <TableCell
                           component="th"
                           scope="row"
-                          style={{ display: "flex", gap: 15 }}
+                          style={{
+                            display: "flex",
+                            gap: 15,
+                            alignItems: "center",
+                          }}
                         >
+                          <h3>
+                            {page === 1
+                              ? index + 1
+                              : (page - 1) * 20 + (index + 1)}
+                          </h3>
                           <img
                             src={row.image}
                             alt={row.name}
