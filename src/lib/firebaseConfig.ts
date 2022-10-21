@@ -1,5 +1,5 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyBQAuzaA-rXvOsvCGva1l3-whvDIFrGlCU",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "crypto-spy-365113.firebaseapp.com",
   projectId: "crypto-spy-365113",
   storageBucket: "crypto-spy-365113.appspot.com",
