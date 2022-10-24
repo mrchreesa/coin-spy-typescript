@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme?: any) => ({
     // border: "1px solid white",
     display: "flex",
     alignItems: "center",
-    color: "gold",
+    color: "rgb(53, 82, 82)",
     fontFamily: "Montserrat",
     fontWeight: 800,
     cursor: "pointer",
@@ -67,40 +67,40 @@ const Header: React.FC<User> = () => {
       type: "dark",
     },
   });
-  console.log(user);
+  // console.log(user);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <AppBar color="transparent" position="static">
-        <Container>
-          <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography
-              onClick={() => navigate("/")}
-              className={classes.title}
-              variant="h4"
-            >
-              Coin Spy &nbsp; <GiSpy />
-            </Typography>
-            {location.pathname === "/login" ? (
-              ""
-            ) : (
-              <Button onClick={() => handleChange()}>
-                {user?.photoURL !== null ? (
-                  <img
-                    style={{ width: "50%" }}
-                    src={user?.photoURL}
-                    alt="avatar"
-                  />
-                ) : (
-                  <CgProfile size="2.4em" color="gold" />
-                )}
-                <CollapseProfile checked={checked} setChecked={setChecked} />
-              </Button>
-            )}
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </ThemeProvider>
+    // <ThemeProvider theme={darkTheme}>
+    <AppBar color="transparent" position="static">
+      <Container>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography
+            onClick={() => navigate("/")}
+            className={classes.title}
+            variant="h4"
+          >
+            Coin Spy &nbsp; <GiSpy color="#97c9b3" />
+          </Typography>
+          {location.pathname === "/login" ? (
+            ""
+          ) : (
+            <Button onClick={() => handleChange()}>
+              {user?.photoURL !== null ? (
+                <img
+                  style={{ width: "50%" }}
+                  src={user?.photoURL}
+                  alt="avatar"
+                />
+              ) : (
+                <CgProfile size="2.4em" color="gold" />
+              )}
+              <CollapseProfile checked={checked} setChecked={setChecked} />
+            </Button>
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
+    // </ThemeProvider>
   );
 };
 export default Header;

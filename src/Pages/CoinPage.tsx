@@ -28,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebar: {
     width: "30%",
+    color: "rgb(53, 82, 82)",
     [theme.breakpoints.down("md")]: {
       width: "100%",
+      borderRight: "none",
+      marginBottom: 20,
     },
     display: "flex",
     flexDirection: "column",
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 25,
     paddingBottom: 15,
     paddingTop: 0,
-    textAlign: "justify",
+    textAlign: "center",
   },
   marketData: {
     alignSelf: "start",

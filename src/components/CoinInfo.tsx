@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme?: any) => ({
     // marginTop: 25,
     padding: 40,
     [theme.breakpoints.down("md")]: {
-      width: "100%",
+      // width: "100%",
       marginTop: 0,
-      padding: 20,
+      // padding: 20,
       paddingTop: 0,
     },
   },
@@ -52,37 +52,38 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
     axios.get(CoinOHLC(coin.id, days)).then((res) => {
       setflag(true);
       let newArray: any[] = [];
-      setCoinOHLC(res.data);
-      coinOHLC?.map((item, index) => {
+      // newArray=res.data;
+      let data: any = res.data;
+      console.log(data);
+
+      const time = data.map((c: any) => {
+        let date = new Date(c[0]);
+        let time =
+          date.getHours() > 12
+            ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+            : `${date.getHours()}:${date.getMinutes()} AM`;
+        return days === 1 ? time : date.toLocaleDateString();
+      });
+
+      data?.map((item: any, index: any) => {
         newArray.push({
           x: time[index],
-          y: coinOHLC[index].slice(1, 5),
+          y: data[index].slice(1, 5),
         });
       });
-      setNewData(newArray);
+      setCoinOHLC(newArray);
     });
   };
 
   useEffect(() => {
-    // fetchHistoricData();
-
     fetchOHLC();
   }, [days]);
-
-  const time = coinOHLC.map((coin) => {
-    let date = new Date(coin[0]);
-    let time =
-      date.getHours() > 12
-        ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-        : `${date.getHours()}:${date.getMinutes()} AM`;
-    return days === 1 ? time : date.toLocaleDateString();
-  });
 
   const classes = useStyles();
   const options = {
     series: [
       {
-        data: newData,
+        data: coinOHLC,
       },
     ],
     options: {
@@ -113,16 +114,8 @@ const CoinInfo: React.FC<Props> = ({ coin }) => {
       },
     },
   };
-  // const darkTheme = createTheme({
-  //   palette: {
-  //     primary: {
-  //       main: "#fff",
-  //     },
-  //     type: "dark",
-  //   },
-  // });
-  // console.log(newData);
-  // console.log(coinOHLC);
+
+  console.log(coinOHLC);
 
   return (
     // <ThemeProvider theme={darkTheme}>

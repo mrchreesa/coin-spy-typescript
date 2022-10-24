@@ -99,7 +99,7 @@ const CollapseProfile: React.FC<Props> = ({ checked, setChecked }) => {
     getSavedCoins();
   }, []);
 
-  console.log(savedCoins);
+  // console.log(savedCoins);
 
   return (
     <div className={classes.root}>

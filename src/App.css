@@ -14,15 +14,31 @@ a {
 }
 
 .App {
-  background-color: #14161a !important;
+  /* background-color: #14161a !important; */
   min-height: 100vh !important;
   color: white !important;
+  color: rgb(53, 82, 82);
 }
 .row {
-  background-color: #16171a;
+  /* background-color: #16171a; */
   cursor: pointer !important;
   font-family: "Montserrat";
 }
 .row:hover {
-  background-color: #131111;
+  background-color: #e2f4e9;
+}
+.banner {
+  position: relative;
+}
+
+.banner::before {
+  content: "";
+  background-image: url("../public/banner3.jpeg");
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.9;
 }
