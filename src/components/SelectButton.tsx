@@ -7,7 +7,7 @@ interface Props {
   onClick: any;
   style: {};
 }
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme?: any) => ({
   selectbutton: {
     border: "1px solid gold",
     borderRadius: 5,
@@ -26,10 +26,19 @@ const useStyles = makeStyles({
       backgroundColor: "gold",
       color: "black",
     },
+    [theme.breakpoints.down("sm")]: {
+      width: "25%",
+      marginBlock: 10,
+      marginInline: 5,
+      textAlign: "center",
+      paddingRight: 5,
+      border: 0,
+      paddingLeft: 5,
+    },
     // width: "100%",
     //   margin: 5,
   },
-});
+}));
 
 const SelectButton: React.FC<Props> = ({
   children,
