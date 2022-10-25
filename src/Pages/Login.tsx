@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme?: any) => ({
     fontWeight: 600,
   },
   button: {
-    width: "16vw",
+    // width: "16vw",
     minWidth: "240px",
     padding: "15px 25px",
-    color: "white",
+    color: "rgb(53, 82, 82)",
     display: "flex",
     justifyContent: "space-between",
     borderTop: "1px solid",
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme?: any) => ({
     fontFamily: "Montserrat",
     fontWeight: 600,
     "&:hover": {
-      backgroundColor: "#35363a",
-      opacity: "0.7",
+      backgroundColor: "rgb(53, 82, 82, 0.25)",
+      // opacity: "0.7",
     },
   },
   icon: {
@@ -107,12 +107,12 @@ const Login: React.FC<IApplicationProps> = () => {
         <Paper
           style={{
             display: "flex",
-            color: "white",
-            backgroundColor: "#35363a",
+            // color: "white",
+            // backgroundColor: "#35363a",
             flexDirection: "column",
             padding: 20,
             borderRadius: "15px",
-            borderBlock: "10px solid gold",
+            borderBlock: "10px solid rgb(53, 82, 82)",
           }}
         >
           <Typography className={classes.title}>Sign in</Typography>
