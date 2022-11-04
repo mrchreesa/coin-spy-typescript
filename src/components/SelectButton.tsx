@@ -9,7 +9,7 @@ interface Props {
 }
 const useStyles = makeStyles((theme?: any) => ({
   selectbutton: {
-    border: "1px solid gold",
+    border: "1px solid ",
     borderRadius: 5,
     padding: 10,
     paddingLeft: 20,
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme?: any) => ({
     // backgroundColor: selected ? "gold" : "",
     // color: selected ? "black" : "",
     // fontWeight: selected ? 700 : 500,
-    backgroundColor: "gold",
-    color: "black",
+    backgroundImage: "linear-gradient(45deg ,rgba(0,212,255,1) 35%, rgba(53,82,82,1) 100%)",
+    color: "white",
     fontWeight: 700,
     "&:hover": {
       backgroundColor: "gold",

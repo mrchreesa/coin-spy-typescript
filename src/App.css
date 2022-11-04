@@ -10,9 +10,12 @@
 
 a {
   text-decoration: none;
-  color: gold;
+  color: rgba(87, 97, 97, 0.7);
+  font-style: italic;
 }
-
+a:hover {
+  color: black;
+}
 .App {
   /* background-color: #14161a !important; */
   min-height: 100vh !important;
@@ -23,6 +26,7 @@ a {
   /* background-color: #16171a; */
   cursor: pointer !important;
   font-family: "Montserrat";
+  /* color: #355252 */
 }
 .row:hover {
   background-color: #e2f4e9;
@@ -42,3 +46,10 @@ a {
   left: 0;
   opacity: 0.9;
 }
+/* .login-container {
+  background-image: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 1) 35%,
+    rgba(53, 82, 82, 1) 100%
+  );
+} */

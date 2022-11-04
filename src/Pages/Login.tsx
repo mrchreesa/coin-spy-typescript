@@ -95,13 +95,16 @@ const Login: React.FC<IApplicationProps> = () => {
     <>
       <Grid
         container
+        className="login-container"
         // xs={12}
         // justify="center"
         style={{
-          height: "60vh",
+          height: "calc(100vh - 64px)",
+          paddingBottom: "5%",
           width: "100%",
           alignItems: "center",
           justifyContent: "center",
+          backgroundImage: "radial-gradient(circle, rgba(0,212,255,1) 35%, rgba(53,82,82,1) 100%)",
         }}
       >
         <Paper
@@ -112,7 +115,7 @@ const Login: React.FC<IApplicationProps> = () => {
             flexDirection: "column",
             padding: 20,
             borderRadius: "15px",
-            borderBlock: "10px solid rgb(53, 82, 82)",
+            borderBlock: "10px solid rgba(53, 82, 82, 1)",
           }}
         >
           <Typography className={classes.title}>Sign in</Typography>

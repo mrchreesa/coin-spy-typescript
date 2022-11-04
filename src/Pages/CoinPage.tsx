@@ -21,6 +21,7 @@ import { firebaseConfig } from "../lib/firebaseConfig";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
+    color: 'black',
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       alignItems: "center",
